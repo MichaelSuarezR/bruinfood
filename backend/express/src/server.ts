@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
@@ -28,7 +28,7 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
 // Health check endpoint
-app.get('/api/health', (req, res) => {
+app.get('/api/health', (req: Request, res: Response) => {
   res.json({ 
     status: 'OK', 
     message: 'BruinCoin API is running!',
@@ -37,7 +37,7 @@ app.get('/api/health', (req, res) => {
 });
 
 // Basic API routes
-app.get('/api', (req, res) => {
+app.get('/api', (req: Request, res: Response) => {
   res.json({ 
     message: 'Welcome to BruinCoin API!',
     version: '1.0.0',
@@ -72,5 +72,4 @@ app.listen(port, '0.0.0.0', () => {
   console.log(`📊 Health check: http://localhost:${port}/api/health`);
   console.log(`📱 Mobile app can connect via your local IP address`);
 });
-
 
