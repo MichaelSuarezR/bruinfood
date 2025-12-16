@@ -143,7 +143,7 @@ export default function App() {
               setAuthScreen('login');
             }}
           />
-        ) : (
+        ) : authScreen === 'login' ? (
           <LoginScreen 
             onLogin={({ requiresOnboarding }) => {
               if (requiresOnboarding) {
@@ -156,7 +156,7 @@ export default function App() {
             }} 
             onSwitchToRegister={() => setAuthScreen('onboarding')}
           />
-        )}
+        ): null}
       </SafeAreaView>
     );
   }

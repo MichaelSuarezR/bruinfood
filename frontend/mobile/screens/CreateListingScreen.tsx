@@ -341,7 +341,11 @@ export default function CreateListingScreen({ onClose }: CreateListingScreenProp
           <ScrollView style={styles.modalScrollView} showsVerticalScrollIndicator={false}>
             {/* Header */}
             <View style={styles.modalHeader}>
-              <TouchableOpacity onPress={onClose} style={styles.closeButton}>
+              <TouchableOpacity
+                onPress={onClose}
+                style={styles.closeButton}
+                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+              >
                 <Ionicons name="close" size={24} color="#1f2937" />
               </TouchableOpacity>
               <Text style={styles.modalTitle}>Create a New Listing</Text>
@@ -580,7 +584,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 16,
-    paddingVertical: 16,
+    paddingTop: 12,
+    paddingBottom: 12,
     borderBottomWidth: 1,
     borderBottomColor: '#e5e7eb',
   },

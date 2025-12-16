@@ -550,11 +550,6 @@ export default function ProfileScreen({ onBack, onLogout, viewUserId }: ProfileS
 
   return (
     <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
-      {/* Top Bar */}
-      <View style={styles.topBar}>
-        <Text style={styles.topBarText}>Seller Profile Page</Text>
-      </View>
-
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
@@ -781,16 +776,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f3f4f6',
   },
-  topBar: {
-    backgroundColor: '#1f2937',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-  },
-  topBarText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#6b7280',
-  },
   scrollView: {
     flex: 1,
   },
@@ -801,11 +786,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingTop: 12,
+    paddingBottom: 12,
     backgroundColor: '#ffffff',
   },
   backButton: {
     marginRight: 12,
+    padding: 8,
   },
   searchBar: {
     flex: 1,

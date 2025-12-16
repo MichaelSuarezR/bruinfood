@@ -3,7 +3,7 @@
 ## Current Setup
 - **Backend IP**: `172.26.97.229:3001`
 - **Backend Status**: ✅ Running
-- **API URL in app.json**: `http://172.26.97.229:3001`
+- **Expo API URL env**: `EXPO_PUBLIC_API_URL=http://172.26.97.229:3001`
 
 ## Step-by-Step Debugging Guide
 
@@ -33,7 +33,7 @@ Should return: `{"status":"OK","message":"BruinCoin API is running!"}`
   ```bash
   ifconfig | grep "inet " | grep -v 127.0.0.1
   ```
-- ✅ If IP changed, update `frontend/mobile/app.json` with new IP
+- ✅ If IP changed, update `EXPO_PUBLIC_API_URL` in `frontend/mobile/.env`
 
 ### 5. Check Firewall Settings
 **On Mac:**
@@ -50,7 +50,7 @@ Should return: `{"status":"OK","message":"BruinCoin API is running!"}`
 cd frontend/mobile
 npm start --clear
 ```
-This ensures `app.json` changes are loaded
+This ensures `app.config.ts` / `.env` changes are loaded
 
 ### 7. Check Console Logs
 In Expo console, you should see:
@@ -72,7 +72,7 @@ Full URL: http://172.26.97.229:3001/api/trades?limit=4&offset=0&accepted=false
 1. Verify same WiFi network
 2. Disable Mac firewall temporarily
 3. Check current IP: `ifconfig | grep "inet " | grep -v 127.0.0.1`
-4. Update `app.json` if IP changed
+4. Update `frontend/mobile/.env` if IP changed
 
 #### Issue: "Request timed out"
 **Causes:**
@@ -123,4 +123,3 @@ lsof -i :3001 | grep LISTEN
 1. Run the app and check Expo console logs
 2. Look for the detailed error messages
 3. Follow the troubleshooting steps above based on the error
-

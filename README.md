@@ -126,6 +126,14 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 NEXT_PUBLIC_API_URL=http://localhost:3001
 ```
 
+### Mobile (.env)
+Copy `frontend/mobile/.env.example` to `frontend/mobile/.env` and set:
+```env
+EXPO_PUBLIC_SUPABASE_URL=your_supabase_url
+EXPO_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+EXPO_PUBLIC_API_URL=http://localhost:3001
+```
+
 ## 🗄️ Database Schema (Supabase)
 
 ### Users Table

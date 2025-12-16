@@ -22,9 +22,9 @@ Add these in Railway dashboard:
 Railway will give you a URL like: `https://your-app.up.railway.app`
 
 ### Update Mobile App:
-Update `frontend/mobile/app.json`:
-```json
-"apiUrl": "https://your-app.up.railway.app"
+Set `EXPO_PUBLIC_API_URL` in `frontend/mobile/.env`:
+```env
+EXPO_PUBLIC_API_URL=https://your-app.up.railway.app
 ```
 
 ---
@@ -121,4 +121,3 @@ Add in Cyclic dashboard (same as Railway)
 | **Vercel** | Generous | ⭐⭐⭐⭐ | Serverless |
 
 ## Recommendation: **Railway** or **Cyclic** (both are very easy)
-

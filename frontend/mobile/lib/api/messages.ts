@@ -1,4 +1,7 @@
-const API_BASE = "https://bruincoin-production.up.railway.app/api";
+import Constants from "expo-constants";
+
+const apiUrl = Constants.expoConfig?.extra?.apiUrl || "http://localhost:3001";
+const API_BASE = `${apiUrl}/api`;
 
 export const getMessages = async (conversationId: string) => {
   const res = await fetch(`${API_BASE}/messages?conversation_id=${conversationId}`);
