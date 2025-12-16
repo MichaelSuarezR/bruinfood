@@ -1,11 +1,11 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { supabase } from '../lib/supabase';
 
 const router = Router();
 
 // GET /api/trades - list trades with optional filters
 // Query params: limit, offset, offerer_user_id, accepted (true/false), category, trade_options, price_min, price_max, tag, search
-router.get('/', async (req, res) => {
+router.get('/', async (req: Request, res: Response) => {
   const limit = Math.min(Number(req.query.limit ?? 20), 100);
   const offset = Number(req.query.offset ?? 0);
   const offererUserId = typeof req.query.offerer_user_id === 'string' ? req.query.offerer_user_id : undefined;
@@ -58,7 +58,7 @@ router.get('/', async (req, res) => {
 
 
 // POST /api/trades - create a trade/listing
-router.post('/', async (req, res) => {
+router.post('/', async (req: Request, res: Response) => {
   const { offerer_user_id, title, description, category, trade_options, price, image_urls, tags } = req.body ?? {};
 
   // --- Required Fields Validation ---
@@ -153,7 +153,7 @@ router.post('/', async (req, res) => {
 });
 
 // GET /api/trades/:id - fetch a single trade
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
   const { data, error } = await supabase
     .from('Trades')
@@ -168,7 +168,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // PATCH /api/trades/:id - update trade fields
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
   const { description, title, category, price, image_urls, tags, trade_options } = req.body ?? {};
 
@@ -224,7 +224,7 @@ router.patch('/:id', async (req, res) => {
 });
 
 // POST /api/trades/:id/accept - mark as accepted
-router.post('/:id/accept', async (req, res) => {
+router.post('/:id/accept', async (req: Request, res: Response) => {
   const { id } = req.params;
   const { data, error } = await supabase
     .from('Trades')
@@ -240,7 +240,7 @@ router.post('/:id/accept', async (req, res) => {
 });
 
 // POST /api/trades/:id/cancel - mark as not accepted
-router.post('/:id/cancel', async (req, res) => {
+router.post('/:id/cancel', async (req: Request, res: Response) => {
   const { id } = req.params;
   const { data, error } = await supabase
     .from('Trades')
@@ -256,7 +256,7 @@ router.post('/:id/cancel', async (req, res) => {
 });
 
 // DELETE /api/trades/:id - delete a trade
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
   const { error } = await supabase
     .from('Trades')

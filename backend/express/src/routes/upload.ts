@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { supabase } from '../lib/supabase';
 
 const router = Router();
@@ -6,7 +6,7 @@ const router = Router();
 // POST /api/upload/images - upload images to Supabase storage
 // Body: { images: string[], userId: string }
 // images: array of base64 encoded image strings
-router.post('/images', async (req, res) => {
+router.post('/images', async (req: Request, res: Response) => {
   try {
     const { images, userId } = req.body ?? {};
 
@@ -134,4 +134,3 @@ router.post('/images', async (req, res) => {
 });
 
 export default router;
-

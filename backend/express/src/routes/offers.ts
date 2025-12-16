@@ -1,10 +1,10 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { supabase } from '../lib/supabase';
 
 const router = Router();
 
 // POST /api/offers - create an offer for a trade
-router.post('/', async (req, res) => {
+router.post('/', async (req: Request, res: Response) => {
   const { trade_id, offerer_user_id, message, price } = req.body ?? {};
 
   if (!trade_id || typeof trade_id !== 'string') {
@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
 });
 
 // GET /api/offers - list offers with filters
-router.get('/', async (req, res) => {
+router.get('/', async (req: Request, res: Response) => {
   const limit = Math.min(Number(req.query.limit ?? 20), 100);
   const offset = Number(req.query.offset ?? 0);
   const tradeId = typeof req.query.trade_id === 'string' ? req.query.trade_id : undefined;
@@ -54,7 +54,7 @@ router.get('/', async (req, res) => {
 });
 
 // PATCH /api/offers/:id - update offer status (accept/reject)
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
   const { status } = req.body ?? {};
 
@@ -75,4 +75,3 @@ router.patch('/:id', async (req, res) => {
 });
 
 export default router;
-

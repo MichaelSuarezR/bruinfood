@@ -1,10 +1,10 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { supabase } from '../lib/supabase';
 
 const router = Router();
 
 // GET /api/looking-for/:user_id - get user's "looking for" items
-router.get('/:user_id', async (req, res) => {
+router.get('/:user_id', async (req: Request, res: Response) => {
   const { user_id } = req.params;
 
   const { data, error } = await supabase
@@ -18,7 +18,7 @@ router.get('/:user_id', async (req, res) => {
 });
 
 // POST /api/looking-for - create a "looking for" item
-router.post('/', async (req, res) => {
+router.post('/', async (req: Request, res: Response) => {
   const { user_id, item_name } = req.body ?? {};
 
   if (!user_id || typeof user_id !== 'string') {
@@ -39,7 +39,7 @@ router.post('/', async (req, res) => {
 });
 
 // DELETE /api/looking-for/:id - delete a "looking for" item
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
 
   const { error } = await supabase
@@ -52,4 +52,3 @@ router.delete('/:id', async (req, res) => {
 });
 
 export default router;
-

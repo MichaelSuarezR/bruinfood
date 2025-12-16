@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { supabase } from '../lib/supabase';
 
 const router = Router();
@@ -21,7 +21,7 @@ const normalizeStringArray = (input: unknown): string[] => {
 };
 
 // GET /api/users - list users with optional search
-router.get('/', async (req, res) => {
+router.get('/', async (req: Request, res: Response) => {
   const limit = Math.min(Number(req.query.limit ?? 20), 100);
   const offset = Number(req.query.offset ?? 0);
   const search = typeof req.query.search === 'string' ? req.query.search : undefined;
@@ -42,7 +42,7 @@ router.get('/', async (req, res) => {
 });
 
 // POST /api/users - create a new user
-router.post('/', async (req, res) => {
+router.post('/', async (req: Request, res: Response) => {
   const { id, email, user_name, bio, profile_picture_url, trade_preferences, category_preferences, interests } = req.body ?? {};
 
   if (!id || typeof id !== 'string') {
@@ -110,7 +110,7 @@ router.post('/', async (req, res) => {
 });
 
 // GET /api/users/:id - fetch single user by id
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
 
   const { data, error } = await supabase
@@ -125,7 +125,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // PATCH /api/users/:id - update user profile
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
   const { user_name, email, bio, profile_picture_url, trade_preferences, category_preferences, interests } = req.body ?? {};
 
@@ -162,5 +162,4 @@ router.patch('/:id', async (req, res) => {
 });
 
 export default router;
-
 

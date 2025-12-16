@@ -1,10 +1,10 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { supabase } from '../lib/supabase';
 
 const router = Router();
 
 // POST /api/ratings - create or update a rating
-router.post('/', async (req, res) => {
+router.post('/', async (req: Request, res: Response) => {
   const { rater_id, rated_user_id, rating } = req.body ?? {};
 
   if (!rater_id || typeof rater_id !== 'string') {
@@ -63,7 +63,7 @@ router.post('/', async (req, res) => {
 });
 
 // GET /api/ratings/:user_id - get average rating for a user
-router.get('/:user_id', async (req, res) => {
+router.get('/:user_id', async (req: Request, res: Response) => {
   const { user_id } = req.params;
 
   const { data: user } = await supabase
@@ -82,4 +82,3 @@ router.get('/:user_id', async (req, res) => {
 });
 
 export default router;
-

@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { supabase } from '../lib/supabase';
 
 const router = Router();
@@ -9,7 +9,7 @@ function normalizePair(a: string, b: string) {
 }
 
 // POST /api/conversations - find or create a conversation between two users
-router.post('/', async (req, res) => {
+router.post('/', async (req: Request, res: Response) => {
   const { participant_a, participant_b } = req.body ?? {};
   if (!participant_a || !participant_b || typeof participant_a !== 'string' || typeof participant_b !== 'string') {
     return res.status(400).json({ error: 'participant_a and participant_b (uuid strings) are required' });
@@ -38,7 +38,7 @@ router.post('/', async (req, res) => {
 });
 
 // GET /api/conversations?user_id=...&limit=&offset= - list user's conversations with unread counts
-router.get('/', async (req, res) => {
+router.get('/', async (req: Request, res: Response) => {
   const userId = typeof req.query.user_id === 'string' ? req.query.user_id : undefined;
   const limit = Math.min(Number(req.query.limit ?? 20), 100);
   const offset = Number(req.query.offset ?? 0);
@@ -73,7 +73,7 @@ router.get('/', async (req, res) => {
 });
 
 // GET /api/conversations/:id - get a single conversation
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
   const userId = typeof req.query.user_id === 'string' ? req.query.user_id : undefined;
 
@@ -107,7 +107,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // DELETE /api/conversations/:id - delete a conversation
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
   const { error } = await supabase
     .from('Conversations')
@@ -119,5 +119,4 @@ router.delete('/:id', async (req, res) => {
 });
 
 export default router;
-
 

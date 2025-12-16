@@ -1,10 +1,10 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { supabase } from '../lib/supabase';
 
 const router = Router();
 
 // POST /api/messages - create a message
-router.post('/', async (req, res) => {
+router.post('/', async (req: Request, res: Response) => {
   const { sender_id, receiver_id, content, conversation_id, attachment_url } = req.body ?? {};
 
   if (!sender_id || typeof sender_id !== 'string') {
@@ -45,7 +45,7 @@ router.post('/', async (req, res) => {
 
 // GET /api/messages - list messages between two users or by conversation_id
 // Query: sender_id, receiver_id, conversation_id, limit, offset
-router.get('/', async (req, res) => {
+router.get('/', async (req: Request, res: Response) => {
   const limit = Math.min(Number(req.query.limit ?? 50), 200);
   const offset = Number(req.query.offset ?? 0);
   const senderId = typeof req.query.sender_id === 'string' ? req.query.sender_id : undefined;
@@ -75,7 +75,7 @@ router.get('/', async (req, res) => {
 });
 
 // GET /api/messages/:id - fetch a single message
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
   const { data, error } = await supabase
     .from('Messages')
@@ -89,7 +89,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // DELETE /api/messages/:id - delete a message (only sender can delete)
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
   const { sender_id } = req.body ?? {};
 
@@ -116,5 +116,4 @@ router.delete('/:id', async (req, res) => {
 });
 
 export default router;
-
 
