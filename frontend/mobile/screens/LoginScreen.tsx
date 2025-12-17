@@ -4,7 +4,7 @@ import { supabase } from '../lib/supabaseClient';
 import { palette, buttons } from '../constants/theme';
 
 interface LoginScreenProps {
-  onLogin: (result: { requiresOnboarding: boolean }) => void;
+  onLogin: () => void;
   onBack?: () => void;
   onSwitchToRegister?: () => void;
 }
@@ -50,11 +50,7 @@ export default function LoginScreen({ onLogin, onBack, onSwitchToRegister }: Log
       }
 
       if (data.user) {
-        const onboardingComplete =
-          data.user.user_metadata?.onboarding_complete === true ||
-          data.user.user_metadata?.onboarding_complete === 'true';
-
-        onLogin({ requiresOnboarding: !onboardingComplete });
+        onLogin();
       }
     } catch (error: any) {
       Alert.alert('Error', error.message || 'An unexpected error occurred');

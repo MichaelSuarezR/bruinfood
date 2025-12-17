@@ -3,7 +3,7 @@ import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { useEffect, useState } from 'react';
 import LoginScreen from './screens/LoginScreen';
-import OnboardingFlow from './screens/OnboardingFlow';
+import RegisterScreen from './screens/RegisterScreen';
 import HomeScreen from './screens/HomeScreen';
 import SearchScreen from './screens/SearchScreen';
 import ProfileScreen from './screens/ProfileScreen';
@@ -18,7 +18,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 
 type Screen = 'home' | 'search' | 'profile' | 'messages';
-type AuthScreen = 'login' | 'onboarding';
+type AuthScreen = 'login' | 'register';
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -87,16 +87,11 @@ export default function App() {
         if (!isMounted) return;
 
         if (session) {
-          const { data: { user } } = await supabase.auth.getUser();
-          if (!isMounted) return;
-
-          if (user?.user_metadata?.onboarding_complete) {
-            setIsLoggedIn(true);
-            setAuthScreen('login');
-          } else {
-            setIsLoggedIn(false);
-            setAuthScreen('onboarding');
-          }
+          setIsLoggedIn(true);
+          setAuthScreen('login');
+        } else {
+          setIsLoggedIn(false);
+          setAuthScreen('login');
         }
       } catch (error) {
         console.error('Failed to restore session:', error);
@@ -132,31 +127,27 @@ export default function App() {
     return (
       <SafeAreaView style={styles.container} edges={['top']}>
         <StatusBar style="auto" />
-        {authScreen === 'onboarding' ? (
-          <OnboardingFlow
-            onComplete={() => {
+        {authScreen === 'register' ? (
+          <RegisterScreen
+            onRegister={({ loggedIn }) => {
+              if (loggedIn) {
+                setIsLoggedIn(true);
+              } else {
+                setIsLoggedIn(false);
+              }
+              setAuthScreen('login');
+            }}
+            onSwitchToLogin={() => setAuthScreen('login')}
+          />
+        ) : (
+          <LoginScreen 
+            onLogin={() => {
               setIsLoggedIn(true);
               setAuthScreen('login');
-            }}
-            onExit={() => {
-              setIsLoggedIn(false);
-              setAuthScreen('login');
-            }}
-          />
-        ) : authScreen === 'login' ? (
-          <LoginScreen 
-            onLogin={({ requiresOnboarding }) => {
-              if (requiresOnboarding) {
-                setIsLoggedIn(false);
-                setAuthScreen('onboarding');
-              } else {
-                setIsLoggedIn(true);
-                setAuthScreen('login');
-              }
             }} 
-            onSwitchToRegister={() => setAuthScreen('onboarding')}
+            onSwitchToRegister={() => setAuthScreen('register')}
           />
-        ): null}
+        )}
       </SafeAreaView>
     );
   }
@@ -183,7 +174,10 @@ export default function App() {
         {currentScreen === 'profile' && (
           <ProfileScreen
             onBack={() => setCurrentScreen('home')}
-            onLogout={() => setIsLoggedIn(false)}
+            onLogout={() => {
+              setIsLoggedIn(false);
+              setAuthScreen('login');
+            }}
           />
         )}
         

@@ -10,6 +10,7 @@ import lookingForRouter from './routes/lookingFor';
 import ratingsRouter from './routes/ratings';
 import offersRouter from './routes/offers';
 import uploadRouter from './routes/upload';
+import diningRouter from './routes/dining';
 
 // Load environment variables
 dotenv.config();
@@ -64,6 +65,7 @@ app.use('/api/looking-for', lookingForRouter);
 app.use('/api/ratings', ratingsRouter);
 app.use('/api/offers', offersRouter);
 app.use('/api/upload', uploadRouter);
+app.use('/api/dining', diningRouter);
 
 // Start server
 const port = typeof PORT === 'string' ? parseInt(PORT, 10) : PORT;
@@ -72,4 +74,3 @@ app.listen(port, '0.0.0.0', () => {
   console.log(`📊 Health check: http://localhost:${port}/api/health`);
   console.log(`📱 Mobile app can connect via your local IP address`);
 });
-
